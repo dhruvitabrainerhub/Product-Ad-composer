@@ -11,6 +11,7 @@ import json
 import logging
 import os
 from pathlib import Path
+import pickle
 
 import io
 import pandas as pd
@@ -454,7 +455,8 @@ def load_ml_model():
     if model_path.exists():
         try:
             logger.info("Loading ML model from %s...", model_path)
-            return joblib.load(model_path)
+            with open(model_path, 'rb') as f:
+                return pickle.load(f)
         except Exception as e:
             logger.error("Failed to load ML model: %s", e)
     
